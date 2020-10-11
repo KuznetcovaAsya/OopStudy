@@ -1,36 +1,53 @@
 package ru.oopstudy.kuznetcova.range;
 
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Range range = new Range(1,10);
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(Arrays.toString(range.getIntersectionRange(1,7)));
+        System.out.println("Введите значения интервала. От: ");
+        double startNumberBaseRange = scanner.nextDouble();
 
+        System.out.println("До: ");
+        double endNumberBaseRange = scanner.nextDouble();
 
+        Range baseRange = new Range(startNumberBaseRange, endNumberBaseRange);
 
-        range.print();
+        baseRange.print();
 
-        range.setFrom(-100);
-        range.setTo(-25);
+        baseRange.setFrom(1);
+        baseRange.setTo(25);
 
-        double newFrom = range.getFrom();
-        System.out.println("Новое значение \"от\": " + newFrom);
+        double newStartNumberBaseRange = baseRange.getFrom();
+        System.out.println("Новое значение \"от\": " + newStartNumberBaseRange);
 
-        double newTo = range.getTo();
-        System.out.println("Новое значение \"до\": " + newTo);
+        double newEndNumberBaseRange = baseRange.getTo();
+        System.out.println("Новое значение \"до\": " + newEndNumberBaseRange);
 
-        System.out.printf("Длина диапазона: %5.2f%n", range.getLength());
+        System.out.printf("Длина диапазона: %5.2f%n", baseRange.getLength());
 
-        double number = 500;
+        System.out.println("Введите число: ");
+        double number = scanner.nextDouble();
 
-        if (range.isInside(number)) {
+        if (baseRange.isInside(number)) {
             System.out.println("Число " + number + " входит в диапазон");
         } else {
             System.out.println("Число " + number + " не входит в диапазон");
         }
 
+        System.out.println("Введите значения нового интервала. От: ");
+        double startNumberAnotherRange = scanner.nextDouble();
 
+        System.out.println("До: ");
+        double endNumberAnotherRange = scanner.nextDouble();
+
+        if (baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange) == null) {
+            System.out.println("Пересечения интервалов нет");
+        } else {
+            System.out.println("Интервал пересечения: " +
+                    baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange).getFrom() +
+                    " " + baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange).getTo());
+        }
     }
 }

@@ -37,13 +37,13 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    public double[] getIntersectionRange(double fromAnother, double toAnother) {
+    Range intersection(double fromAnother, double toAnother) {
         if (this.from >= fromAnother && this.to <= toAnother) {
-            return new double[]{this.from, this.to};
+            return new Range(this.from, this.to);
         }
 
         if (this.from <= fromAnother && this.to >= toAnother) {
-            return new double[]{fromAnother, toAnother};
+            return new Range(fromAnother, toAnother);
         }
 
         return null;
