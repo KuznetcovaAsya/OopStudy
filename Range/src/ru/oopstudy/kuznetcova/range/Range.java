@@ -26,7 +26,7 @@ public class Range {
     }
 
     public void print() {
-        System.out.printf("Диапазон от %3.2f до %3.2f%n", from, to);
+        System.out.print("(" + from + "; " + to + ")");
     }
 
     public double getLength() {
@@ -37,14 +37,16 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    Range intersection(double fromAnother, double toAnother) {
-        if (this.from >= fromAnother && this.to <= toAnother) {
+    public Range getIntersection(Range anotherRange) {
+        /*if (this.from >= anotherRange.from && this.to <= anotherRange.to) {
             return new Range(this.from, this.to);
         }
 
-        if (this.from <= fromAnother && this.to >= toAnother) {
-            return new Range(fromAnother, toAnother);
-        }
+        if (this.from <= anotherRange.from && this.to >= anotherRange.to) {
+            return new Range(anotherRange.from, anotherRange.to);
+        }*/
+
+
 
         return null;
     }

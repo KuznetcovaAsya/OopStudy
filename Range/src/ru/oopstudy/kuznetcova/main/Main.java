@@ -1,4 +1,6 @@
-package ru.oopstudy.kuznetcova.range;
+package ru.oopstudy.kuznetcova.main;
+
+import ru.oopstudy.kuznetcova.range.Range;
 
 import java.util.Scanner;
 
@@ -7,23 +9,23 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите значения интервала. От: ");
-        double startNumberBaseRange = scanner.nextDouble();
+        double from = scanner.nextDouble();
 
         System.out.println("До: ");
-        double endNumberBaseRange = scanner.nextDouble();
+        double to = scanner.nextDouble();
 
-        Range baseRange = new Range(startNumberBaseRange, endNumberBaseRange);
+        Range baseRange = new Range(from, to);
 
         baseRange.print();
 
         baseRange.setFrom(1);
-        baseRange.setTo(25);
+        baseRange.setTo(50);
 
-        double newStartNumberBaseRange = baseRange.getFrom();
-        System.out.println("Новое значение \"от\": " + newStartNumberBaseRange);
+        double changedFrom = baseRange.getFrom();
+        System.out.println("\nНовое значение \"от\": " + changedFrom);
 
-        double newEndNumberBaseRange = baseRange.getTo();
-        System.out.println("Новое значение \"до\": " + newEndNumberBaseRange);
+        double changedTo = baseRange.getTo();
+        System.out.println("Новое значение \"до\": " + changedTo);
 
         System.out.printf("Длина диапазона: %5.2f%n", baseRange.getLength());
 
@@ -37,17 +39,19 @@ public class Main {
         }
 
         System.out.println("Введите значения нового интервала. От: ");
-        double startNumberAnotherRange = scanner.nextDouble();
+        double fromAnother = scanner.nextDouble();
 
         System.out.println("До: ");
-        double endNumberAnotherRange = scanner.nextDouble();
+        double toAnother = scanner.nextDouble();
 
-        if (baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange) == null) {
+        Range anotherRange = new Range(fromAnother,toAnother);
+
+        if (baseRange.getIntersection(anotherRange) == null) {
             System.out.println("Пересечения интервалов нет");
         } else {
             System.out.println("Интервал пересечения: " +
-                    baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange).getFrom() +
-                    " " + baseRange.intersection(startNumberAnotherRange, endNumberAnotherRange).getTo());
+                    "(" + baseRange.getIntersection(anotherRange).getFrom() + "; "
+                    + baseRange.getIntersection(anotherRange).getTo() + ")");
         }
     }
 }
