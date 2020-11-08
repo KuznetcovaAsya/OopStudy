@@ -44,14 +44,23 @@ public class Main {
         System.out.println("До: ");
         double toAnother = scanner.nextDouble();
 
-        Range anotherRange = new Range(fromAnother,toAnother);
+        Range anotherRange = new Range(fromAnother, toAnother);
 
         if (baseRange.getIntersection(anotherRange) == null) {
             System.out.println("Пересечения интервалов нет");
         } else {
-            System.out.println("Интервал пересечения: " +
-                    "(" + baseRange.getIntersection(anotherRange).getFrom() + "; "
-                    + baseRange.getIntersection(anotherRange).getTo() + ")");
+            System.out.print("Интервал пересечения: ");
+            baseRange.getIntersection(anotherRange).print();
+        }
+
+        System.out.print("Интервал объединения: ");
+        baseRange.printArray(baseRange.getMerging(anotherRange));
+
+        if (baseRange.getRemainder(anotherRange) == null) {
+            System.out.println("Разности интервалов нет");
+        } else {
+            System.out.print("\nИнтервал разности: ");
+            baseRange.printArray(baseRange.getRemainder(anotherRange));
         }
     }
 }
