@@ -1,6 +1,6 @@
-package ru.oopstudy.kuznetcova.shapes.Main;
+package ru.oopstudy.kuznetcova.shapes_main;
 
-import ru.oopstudy.kuznetcova.shapes.*;
+import ru.oopstudy.kuznetcova.*;
 
 import java.util.Arrays;
 

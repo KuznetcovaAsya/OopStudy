@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova.shapes;
+package ru.oopstudy.kuznetcova;
 
 public class Square implements Shape {
     private double side;

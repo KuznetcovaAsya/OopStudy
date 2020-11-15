@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova.shapes;
+package ru.oopstudy.kuznetcova;
 
 public class Triangle implements Shape {
     private double x1;
