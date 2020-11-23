@@ -8,33 +8,34 @@ import java.util.Scanner;
 
 public class ArrayListHome {
     public static void main(String[] args) {
-        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 1, 2, 2, 3, 3, 5, 4, 8, 10));
-        System.out.println(getListWithoutEvenNumbers(numbers));
-        System.out.println(getListWithoutDuplicates(numbers));
+        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(2, 3, 7, 7, 4, 6, 8, 8, 11, 16, 10));
+        removeEvenNumbers(numbers);
+        System.out.println("Список без четных элементов: " + numbers);
+        System.out.println("Список без повторяющихся элементов: " + getListWithoutDuplicates(numbers));
 
         try (Scanner scanner = new Scanner(new FileInputStream("Input.txt"))) {
             ArrayList<String> list = new ArrayList<>();
 
             while (scanner.hasNextLine()) {
-                String string = scanner.nextLine();
-                list.add(string);
+                list.add(scanner.nextLine());
             }
 
-            System.out.println(list);
+            System.out.println("Список строк: " + list);
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
         }
     }
 
-    public static ArrayList<Integer> getListWithoutEvenNumbers(ArrayList<Integer> numbers) {
-        for (int i = 0; i < numbers.size(); i++) {
+    public static void removeEvenNumbers(ArrayList<Integer> numbers) {
+        int i = 0;
+
+        while (i < numbers.size()) {
             if (numbers.get(i) % 2 == 0) {
-                numbers.remove(numbers.get(i));
-                i--;
+                numbers.remove(i);
+            } else {
+                i++;
             }
         }
-
-        return numbers;
     }
 
     public static ArrayList<Integer> getListWithoutDuplicates(ArrayList<Integer> numbers) {
