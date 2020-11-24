@@ -1,25 +1,38 @@
-package ru.oopstudy.kuznetcova.shapes_main;
+package ru.oopstudy.kuznetcova.shapes.shapes_main;
 
-import ru.oopstudy.kuznetcova.*;
+import ru.oopstudy.kuznetcova.shapes.*;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Shape[] shapes = {new Square(5),
+        Shape[] shapes = {
+                new Square(5),
                 new Triangle(0, 0, 3, 0, 3, 4),
                 new Rectangle(5, 3),
-                new Circle(3),
-                new Square(3),
+                new Circle(11),
+                new Square(5),
                 new Circle(10),
                 new Rectangle(30, 80),
-                new Triangle(10, 11, 13, 10, 13, 14)};
+                new Triangle(1, 1, 2, 3, 4, 5)
+        };
+
+        System.out.println("Список фигур: ");
+
+        for (int i = 0; i < shapes.length; i++) {
+            Shape shape = shapes[i];
+            System.out.println(i + " " + shape);
+        }
+
+        System.out.println();
 
         Shape maxAreaShape = getShapeWithMaxArea(shapes);
         System.out.println("Фигура с максимальной площадью: " + maxAreaShape);
 
         Shape secondMaxPerimeterShape = getShapeWithSecondMaxPerimeter(shapes);
         System.out.println("Фигура со вторым по величине периметром: " + secondMaxPerimeterShape);
+
+
     }
 
     public static Shape getShapeWithMaxArea(Shape[] shapes) {
@@ -27,9 +40,9 @@ public class Main {
 
         if (shapes.length > 0) {
             return shapes[shapes.length - 1];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     public static Shape getShapeWithSecondMaxPerimeter(Shape[] shapes) {

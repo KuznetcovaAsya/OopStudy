@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova;
+package ru.oopstudy.kuznetcova.shapes;
 
 public class Rectangle implements Shape {
     private double width;
@@ -14,13 +14,13 @@ public class Rectangle implements Shape {
         return width;
     }
 
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
     @Override
     public double getHeight() {
         return height;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
     }
 
     public void setHeight(double height) {
@@ -39,9 +39,16 @@ public class Rectangle implements Shape {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+
         Rectangle rectangle = (Rectangle) obj;
+
         return width == rectangle.width && height == rectangle.height;
     }
 
@@ -49,13 +56,16 @@ public class Rectangle implements Shape {
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
+
         hash = prime * hash + Double.hashCode(width);
         hash = prime * hash + Double.hashCode(height);
+
         return hash;
     }
 
     @Override
     public String toString() {
-        return "Прямоугольник с шириной " + width + " и высотой " + height;
+        return "Прямоугольник с шириной " + width + " и высотой " + height +
+                ". Периметр " + getPerimeter() + ". Площадь " + getArea();
     }
 }

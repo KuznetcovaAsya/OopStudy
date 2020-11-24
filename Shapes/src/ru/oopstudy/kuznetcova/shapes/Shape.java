@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova;
+package ru.oopstudy.kuznetcova.shapes;
 
 public interface Shape {
     double getWidth();
