@@ -1,6 +1,6 @@
-package ru.oopstudy.kuznetcova.vector_main;
+package ru.oopstudy.kuznetcova.vector.vector_main;
 
-import ru.oopstudy.kuznetcova.Vector;
+import ru.oopstudy.kuznetcova.vector.Vector;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class Main {
         double[] array1 = {1, 2, 3, 4, 5};
         double[] array2 = {2.5, 3, 6, 7, 8.3, 9.5, 10};
 
-        Vector vector = new Vector(size);
+        Vector vector = new Vector(10);
         System.out.println(vector + " Вектор размерности " + size);
 
         Vector vector1 = new Vector(array1);
@@ -20,23 +20,23 @@ public class Main {
         Vector vector3 = new Vector(vector1);
         System.out.println(vector3 + " Копия вектора 1");
 
-        Vector vector4 = Vector.sum(vector1, vector2);
+        Vector vector4 = Vector.getSum(vector1, vector2);
         System.out.println(vector4 + " Сумма векторов 1 и 2 (Новый вектор)");
 
-        Vector vector5 = Vector.difference(vector1, vector2);
+        Vector vector5 = Vector.getDifference(vector1, vector2);
         System.out.println(vector5 + " Разность векторов 1 и 2 (Новый вектор)");
 
-        double dotProduct = Vector.dotProduct(vector1, vector2);
+        double dotProduct = Vector.getDotProduct(vector1, vector2);
         System.out.println(dotProduct + " Скалярное произведение векторов 1 и 2");
 
         vector1.add(vector2);
         System.out.println(vector1 + " Измененный вектор 1. Сумма векторов 1 и 2");
 
-        vector1.deduct(vector2);
+        vector1.subtract(vector2);
         System.out.println(vector1 + " Измененный вектор 1. Разность векторов 1 и 2");
 
-        vector1.multiplicandByScalar(5);
-        System.out.println(vector1 + " Измененный вектор 1. Умножение вектора 1 на чило 5");
+        vector1.getMultiplicationByScalar(5);
+        System.out.println(vector1 + " Измененный вектор 1. Умножение вектора 1 на число 5");
 
         vector1.reverse();
         System.out.println(vector1 + " Разворот вектора 1");

@@ -1,6 +1,6 @@
-package ru.oopstudy.kuznetcova.range_main;
+package ru.oopstudy.kuznetcova.range.range_main;
 
-import ru.oopstudy.kuznetcova.Range;
+import ru.oopstudy.kuznetcova.range.Range;
 
 import java.util.Scanner;
 
@@ -22,7 +22,7 @@ public class Main {
         range1.setTo(50);
 
         double changedFrom1 = range1.getFrom();
-        System.out.println("\nНовое значение \"от\": " + changedFrom1);
+        System.out.println("Новое значение \"от\": " + changedFrom1);
 
         double changedTo1 = range1.getTo();
         System.out.println("Новое значение \"до\": " + changedTo1);
@@ -45,19 +45,23 @@ public class Main {
         double to2 = scanner.nextDouble();
 
         Range range2 = new Range(from2, to2);
-        Range intersectionRange = range1.getIntersection(range2);
+        Range[] intersectionRange = range1.getIntersection(range2);
 
         if (intersectionRange == null) {
             System.out.print("Пересечения интервалов нет");
         } else {
-            System.out.print("Интервал пересечения: " + intersectionRange);
+            System.out.print("Интервал пересечения: ");
+            Range.print(intersectionRange);
         }
 
-        System.out.print("\nИнтервал объединения: ");
+        System.out.println();
+
+        System.out.print("Интервал объединения: ");
         Range.print(range1.getUnion(range2));
 
-        System.out.print("\nИнтервал разности: ");
-        Range.print(range1.getDifference(range2));
+        System.out.println();
 
+        System.out.print("Интервал разности: ");
+        Range.print(range1.getDifference(range2));
     }
 }
