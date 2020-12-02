@@ -62,7 +62,6 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return "Круг с радиусом " + radius + ". Периметр " + getPerimeter() +
-                ". Площадь " + getArea();
+        return "Круг с радиусом " + radius + ". Периметр " + getPerimeter() + ". Площадь " + getArea();
     }
 }

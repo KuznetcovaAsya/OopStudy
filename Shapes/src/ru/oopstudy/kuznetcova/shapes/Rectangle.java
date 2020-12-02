@@ -65,7 +65,6 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Прямоугольник с шириной " + width + " и высотой " + height +
-                ". Периметр " + getPerimeter() + ". Площадь " + getArea();
+        return "Прямоугольник с шириной " + width + " и высотой " + height + ". Периметр " + getPerimeter() + ". Площадь " + getArea();
     }
 }

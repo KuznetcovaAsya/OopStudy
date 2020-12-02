@@ -1,4 +1,6 @@
-package ru.oopstudy.kuznetcova.shapes;
+package ru.oopstudy.kuznetcova.shapes_main;
+
+import ru.oopstudy.kuznetcova.shapes.Shape;
 
 import java.util.Comparator;
 

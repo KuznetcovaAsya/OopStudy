@@ -65,18 +65,15 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
-    private double getDistance(double... coordinates) {
+    private static double getDistance(double... coordinates) {
         double max = coordinates[0];
+        double min = coordinates[0];
 
         for (int i = 0; i < coordinates.length - 1; i++) {
             if (max < coordinates[i + 1]) {
                 max = coordinates[i + 1];
             }
-        }
 
-        double min = coordinates[0];
-
-        for (int i = 0; i < coordinates.length - 1; i++) {
             if (min > coordinates[i + 1]) {
                 min = coordinates[i + 1];
             }
@@ -85,7 +82,7 @@ public class Triangle implements Shape {
         return max - min;
     }
 
-    private static double getSideLength(double x1, double x2, double y1, double y2) {
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
@@ -101,24 +98,23 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double sideLength1 = getSideLength(x1, x2, y1, y2);
-        double sideLength2 = getSideLength(x1, x3, y1, y3);
-        double sideLength3 = getSideLength(x2, x3, y2, y3);
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x1, y1, x3, y3);
+        double side3Length = getSideLength(x2, y2, x3, y3);
 
-        double triangleSemiPerimeter = (sideLength1 + sideLength2 + sideLength3) / 2;
+        double triangleSemiPerimeter = (side1Length + side2Length + side3Length) / 2;
 
-        return Math.sqrt(triangleSemiPerimeter * (triangleSemiPerimeter - sideLength1) *
-                (triangleSemiPerimeter - sideLength2) *
-                (triangleSemiPerimeter - sideLength3));
+        return Math.sqrt(triangleSemiPerimeter * (triangleSemiPerimeter - side1Length) * (triangleSemiPerimeter - side2Length) *
+                (triangleSemiPerimeter - side3Length));
     }
 
     @Override
     public double getPerimeter() {
-        double sideLength1 = getSideLength(x1, x2, y1, y2);
-        double sideLength2 = getSideLength(x1, x3, y1, y3);
-        double sideLength3 = getSideLength(x2, x3, y2, y3);
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x1, y1, x3, y3);
+        double side3Length = getSideLength(x2, y2, x3, y3);
 
-        return sideLength1 + sideLength2 + sideLength3;
+        return side1Length + side2Length + side3Length;
     }
 
     public boolean equals(Object obj) {
@@ -132,8 +128,7 @@ public class Triangle implements Shape {
 
         Triangle triangle = (Triangle) obj;
 
-        return x1 == triangle.x1 && y1 == triangle.y1 && x2 == triangle.x2 && y2 == triangle.y2
-                && x3 == triangle.x3 && y3 == triangle.y3;
+        return x1 == triangle.x1 && y1 == triangle.y1 && x2 == triangle.x2 && y2 == triangle.y2 && x3 == triangle.x3 && y3 == triangle.y3;
     }
 
     @Override
@@ -153,8 +148,7 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return "Треугольник с координатами (" + x1 + ", " + y1 + "), " +
-                "(" + x2 + ", " + y2 + "), " + "(" + x3 + ", " + y3 + ") " +
-                ". Периметр " + getPerimeter() + ". Площадь " + getArea();
+        return "Треугольник с координатами (" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + "), (" + x3 + ", " + y3
+                + "). Периметр " + getPerimeter() + ". Площадь " + getArea();
     }
 }

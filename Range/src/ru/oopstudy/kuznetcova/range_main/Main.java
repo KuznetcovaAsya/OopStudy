@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova.range.range_main;
+package ru.oopstudy.kuznetcova.range_main;
 
 import ru.oopstudy.kuznetcova.range.Range;
 

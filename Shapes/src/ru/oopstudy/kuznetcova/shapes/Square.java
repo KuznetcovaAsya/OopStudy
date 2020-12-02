@@ -1,38 +1,38 @@
 package ru.oopstudy.kuznetcova.shapes;
 
 public class Square implements Shape {
-    private double length;
+    private double sideLength;
 
     public Square(double length) {
-        this.length = length;
+        this.sideLength = length;
     }
 
-    public double getLength() {
-        return length;
+    public double getSideLength() {
+        return sideLength;
     }
 
-    public void setLength(double length) {
-        this.length = length;
+    public void setSideLength(double sideLength) {
+        this.sideLength = sideLength;
     }
 
     @Override
     public double getWidth() {
-        return length;
+        return sideLength;
     }
 
     @Override
     public double getHeight() {
-        return length;
+        return sideLength;
     }
 
     @Override
     public double getArea() {
-        return length * length;
+        return sideLength * sideLength;
     }
 
     @Override
     public double getPerimeter() {
-        return length * 4;
+        return sideLength * 4;
     }
 
     public boolean equals(Object obj) {
@@ -46,7 +46,7 @@ public class Square implements Shape {
 
         Square square = (Square) obj;
 
-        return length == square.length;
+        return sideLength == square.sideLength;
     }
 
     @Override
@@ -54,14 +54,13 @@ public class Square implements Shape {
         final int prime = 37;
         int hash = 1;
 
-        hash = prime * hash + Double.hashCode(length);
+        hash = prime * hash + Double.hashCode(sideLength);
 
         return hash;
     }
 
     @Override
     public String toString() {
-        return "Квадрат со стороной " + length + ". Периметр " + getPerimeter() +
-                ". Площадь " + getArea();
+        return "Квадрат со стороной " + sideLength + ". Периметр " + getPerimeter() + ". Площадь " + getArea();
     }
 }

@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova.vector.vector_main;
+package ru.oopstudy.kuznetcova.vector_main;
 
 import ru.oopstudy.kuznetcova.vector.Vector;
 

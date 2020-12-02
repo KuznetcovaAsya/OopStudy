@@ -1,4 +1,4 @@
-package ru.oopstudy.kuznetcova.shapes.shapes_main;
+package ru.oopstudy.kuznetcova.shapes_main;
 
 import ru.oopstudy.kuznetcova.shapes.*;
 
@@ -19,9 +19,8 @@ public class Main {
 
         System.out.println("Список фигур: ");
 
-        for (int i = 0; i < shapes.length; i++) {
-            Shape shape = shapes[i];
-            System.out.println(i + " " + shape);
+        for (Shape shape : shapes) {
+            System.out.println(shape);
         }
 
         System.out.println();
@@ -31,8 +30,6 @@ public class Main {
 
         Shape secondMaxPerimeterShape = getShapeWithSecondMaxPerimeter(shapes);
         System.out.println("Фигура со вторым по величине периметром: " + secondMaxPerimeterShape);
-
-
     }
 
     public static Shape getShapeWithMaxArea(Shape[] shapes) {
