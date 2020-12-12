@@ -3,110 +3,88 @@ package ru.oopstudy.kuznetcova.vector;
 import java.util.Arrays;
 
 public class Vector {
-    private double[] vectorElements;
+    private double[] elements;
 
     public Vector(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("Вместимость = " + size + " Вместимость должна быть > 0");
         }
 
-        vectorElements = new double[size];
+        elements = new double[size];
     }
 
-    public Vector(double[] vectorElements) {
-        if (vectorElements == null) {
+    public Vector(double[] elements) {
+        if (elements == null) {
             throw new NullPointerException("Массив не может быть null");
         }
 
-        if (vectorElements.length == 0) {
-            throw new IllegalArgumentException(vectorElements.length +
+        if (elements.length == 0) {
+            throw new IllegalArgumentException(elements.length +
                     " Длина массива должна быть > 0");
         }
 
-        this.vectorElements = new double[vectorElements.length];
-        System.arraycopy(vectorElements, 0, this.vectorElements, 0, vectorElements.length);
+        this.elements = Arrays.copyOf(elements, elements.length);
     }
 
     public Vector(Vector vector) {
-        this(vector.vectorElements);
+        this(vector.elements);
     }
 
-    public Vector(int size, double[] vectorElements) {
-        if (vectorElements == null) {
+    public Vector(int size, double[] elements) {
+        if (elements == null) {
             throw new NullPointerException("Массив не может быть null");
-        }
-
-        if (vectorElements.length == 0) {
-            throw new IllegalArgumentException(vectorElements.length +
-                    " Длина массива должна быть > 0");
         }
 
         if (size <= 0) {
             throw new IllegalArgumentException("Вместимость = " + size + " Вместимость должна быть > 0");
         }
 
-        this.vectorElements = new double[size];
-        int elementsMinCount = Math.min(size, vectorElements.length);
-        System.arraycopy(vectorElements, 0, this.vectorElements, 0, elementsMinCount);
+        int elementsMinCount = Math.min(size, elements.length);
+        this.elements = Arrays.copyOf(elements, elementsMinCount);
     }
 
     public int getSize() {
-        return vectorElements.length;
+        return elements.length;
     }
 
     public void add(Vector vector) {
-        if (vectorElements.length >= vector.vectorElements.length) {
-            for (int i = 0; i < vector.vectorElements.length; i++) {
-                vectorElements[i] += vector.vectorElements[i];
-            }
-        } else {
-            double[] maxVector = new double[vector.vectorElements.length];
+        if (elements.length < vector.elements.length) {
+            elements = Arrays.copyOf(elements, vector.elements.length);
+        }
 
-            for (int i = 0; i < vectorElements.length; i++) {
-                maxVector[i] = vector.vectorElements[i] + vectorElements[i];
-            }
+        int limit = Math.min(elements.length, vector.elements.length);
 
-            System.arraycopy(vector.vectorElements, vectorElements.length, maxVector, vectorElements.length,
-                    vector.vectorElements.length - vectorElements.length);
-
-            vectorElements = maxVector;
+        for (int i = 0; i < limit; i++) {
+            elements[i] += vector.elements[i];
         }
     }
 
     public void subtract(Vector vector) {
-        if (vectorElements.length >= vector.vectorElements.length) {
-            for (int i = 0; i < vector.vectorElements.length; i++) {
-                vectorElements[i] -= vector.vectorElements[i];
-            }
-        } else {
-            double[] maxVector = new double[vector.vectorElements.length];
+        if (elements.length < vector.elements.length) {
+            elements = Arrays.copyOf(elements, vector.elements.length);
+        }
 
-            for (int i = 0; i < vectorElements.length; i++) {
-                maxVector[i] = vector.vectorElements[i] - vectorElements[i];
-            }
+        int limit = Math.min(elements.length, vector.elements.length);
 
-            for (int i = vectorElements.length; i < vector.vectorElements.length; i++) {
-                maxVector[i] = -vector.vectorElements[i];
-            }
-
-            vectorElements = maxVector;
+        for (int i = 0; i < limit; i++) {
+            elements[i] -= vector.elements[i];
         }
     }
 
-    public void getMultiplicationByScalar(double number) {
-        for (int i = 0; i < vectorElements.length; i++) {
-            vectorElements[i] *= number;
+    public void multiplyByScalar(double number) {
+        for (int i = 0; i < elements.length; i++) {
+            elements[i] *= number;
         }
     }
 
     public void reverse() {
-        getMultiplicationByScalar(-1);
+        multiplyByScalar(-1);
     }
 
     public double getLength() {
         double squaresSum = 0;
 
-        for (double element : vectorElements) {
+        for (double element : elements) {
             squaresSum += element * element;
         }
 
@@ -114,40 +92,32 @@ public class Vector {
     }
 
     public double getByIndex(int index) {
-        if (index < 0 || index >= vectorElements.length) {
-            throw new ArrayIndexOutOfBoundsException("Индекс = " + index +
-                    "Индекс должен быть >= 0, индекс должен быть < " + vectorElements.length);
+        if (index < 0 || index >= elements.length) {
+            throw new IndexOutOfBoundsException("Индекс = " + index +
+                    " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
         }
 
-        return vectorElements[index];
+        return elements[index];
     }
 
     public void setByIndex(int index, double number) {
-        if (index < 0 || index >= vectorElements.length) {
-            throw new ArrayIndexOutOfBoundsException("Индекс = " + index +
-                    "Индекс должен быть >= 0, индекс должен быть < " + vectorElements.length);
+        if (index < 0 || index >= elements.length) {
+            throw new IndexOutOfBoundsException("Индекс = " + index +
+                    " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
         }
 
-        vectorElements[index] = number;
+        elements[index] = number;
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        int finalSize = Math.max(vector1.vectorElements.length, vector2.vectorElements.length);
-
-        Vector sum = new Vector(finalSize);
-
-        sum.add(vector1);
+        Vector sum = new Vector(vector1);
         sum.add(vector2);
 
         return sum;
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        int finalSize = Math.max(vector1.vectorElements.length, vector2.vectorElements.length);
-
-        Vector difference = new Vector(finalSize);
-
-        difference.add(vector1);
+        Vector difference = new Vector(vector1);
         difference.subtract(vector2);
 
         return difference;
@@ -155,10 +125,10 @@ public class Vector {
 
     public static double getDotProduct(Vector vector1, Vector vector2) {
         double dotProduct = 0;
-        int minSize = Math.min(vector1.vectorElements.length, vector2.vectorElements.length);
+        int minSize = Math.min(vector1.elements.length, vector2.elements.length);
 
         for (int i = 0; i < minSize; i++) {
-            dotProduct += vector1.vectorElements[i] * vector2.vectorElements[i];
+            dotProduct += vector1.elements[i] * vector2.elements[i];
         }
 
         return dotProduct;
@@ -176,12 +146,12 @@ public class Vector {
 
         Vector vector = (Vector) obj;
 
-        if (vectorElements.length != vector.vectorElements.length) {
+        if (elements.length != vector.elements.length) {
             return false;
         }
 
-        for (int i = 0; i < vectorElements.length; i++) {
-            if (vectorElements[i] != vector.vectorElements[i]) {
+        for (int i = 0; i < elements.length; i++) {
+            if (elements[i] != vector.elements[i]) {
                 return false;
             }
         }
@@ -191,7 +161,7 @@ public class Vector {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(vectorElements);
+        return Arrays.hashCode(elements);
     }
 
     @Override
@@ -200,12 +170,13 @@ public class Vector {
 
         stringBuilder.append("{");
 
-        for (int i = 0; i < vectorElements.length; i++) {
-            stringBuilder.append(vectorElements[i]);
+        for (double element : elements) {
+            stringBuilder.append(element);
+            stringBuilder.append(", ");
+        }
 
-            if (i < vectorElements.length - 1) {
-                stringBuilder.append(", ");
-            }
+        if (elements.length > 0) {
+            stringBuilder.setLength(stringBuilder.length() - 2);
         }
 
         stringBuilder.append("}");

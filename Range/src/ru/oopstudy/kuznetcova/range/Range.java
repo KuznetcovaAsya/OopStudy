@@ -49,23 +49,35 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    public Range[] getIntersection(Range range) {
+    public Range getIntersection(Range range) {
+        if (range == null) {
+            return null;
+        }
+
         if (Math.max(from, range.from) < Math.min(to, range.to)) {
-            return new Range[]{new Range(Math.max(from, range.from), Math.min(to, range.to))};
+            return new Range(Math.max(from, range.from), Math.min(to, range.to));
         }
 
         return null;
     }
 
     public Range[] getUnion(Range range) {
+        if (range == null) {
+            return new Range[]{new Range(from, to)};
+        }
+
         if (Math.max(from, range.from) <= Math.min(to, range.to)) {
             return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
         }
 
-        return new Range[]{this, range};
+        return new Range[]{new Range(from, to), new Range(range.from, range.to)};
     }
 
     public Range[] getDifference(Range range) {
+        if (range == null) {
+            return new Range[]{new Range(from, to)};
+        }
+
         if (from < range.from && to > range.to) {
             return new Range[]{
                     new Range(from, range.from),
@@ -74,7 +86,7 @@ public class Range {
         }
 
         if (getIntersection(range) == null) {
-            return new Range[]{this};
+            return new Range[]{new Range(from, to)};
         }
 
         if (to > range.from && from < range.from && to <= range.to) {

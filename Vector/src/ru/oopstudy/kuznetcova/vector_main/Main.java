@@ -35,7 +35,7 @@ public class Main {
         vector1.subtract(vector2);
         System.out.println(vector1 + " Измененный вектор 1. Разность векторов 1 и 2");
 
-        vector1.getMultiplicationByScalar(5);
+        vector1.multiplyByScalar(5);
         System.out.println(vector1 + " Измененный вектор 1. Умножение вектора 1 на число 5");
 
         vector1.reverse();

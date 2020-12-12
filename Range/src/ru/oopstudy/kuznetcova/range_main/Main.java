@@ -45,13 +45,12 @@ public class Main {
         double to2 = scanner.nextDouble();
 
         Range range2 = new Range(from2, to2);
-        Range[] intersectionRange = range1.getIntersection(range2);
+        Range intersectionRange = range1.getIntersection(range2);
 
         if (intersectionRange == null) {
             System.out.print("Пересечения интервалов нет");
         } else {
-            System.out.print("Интервал пересечения: ");
-            Range.print(intersectionRange);
+            System.out.print("Интервал пересечения: " + intersectionRange);
         }
 
         System.out.println();
