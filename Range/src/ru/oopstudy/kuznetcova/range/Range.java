@@ -25,20 +25,20 @@ public class Range {
         this.to = to;
     }
 
-    public static void print(Range[] range) {
+    public static String getRangesArrayString(Range[] ranges) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[");
 
-        for (int i = 0; i < range.length; i++) {
-            stringBuilder.append(range[i]);
+        for (int i = 0; i < ranges.length; i++) {
+            stringBuilder.append(ranges[i]);
 
-            if (i < range.length - 1) {
+            if (i < ranges.length - 1) {
                 stringBuilder.append(", ");
             }
         }
 
         stringBuilder.append("]");
-        System.out.print(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 
     public double getLength() {
@@ -50,22 +50,17 @@ public class Range {
     }
 
     public Range getIntersection(Range range) {
-        if (range == null) {
-            return null;
-        }
+        double maxFrom = Math.max(from, range.from);
+        double minTo = Math.min(to, range.to);
 
-        if (Math.max(from, range.from) < Math.min(to, range.to)) {
-            return new Range(Math.max(from, range.from), Math.min(to, range.to));
+        if (maxFrom < minTo) {
+            return new Range(maxFrom, minTo);
         }
 
         return null;
     }
 
     public Range[] getUnion(Range range) {
-        if (range == null) {
-            return new Range[]{new Range(from, to)};
-        }
-
         if (Math.max(from, range.from) <= Math.min(to, range.to)) {
             return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
         }
@@ -74,10 +69,6 @@ public class Range {
     }
 
     public Range[] getDifference(Range range) {
-        if (range == null) {
-            return new Range[]{new Range(from, to)};
-        }
-
         if (from < range.from && to > range.to) {
             return new Range[]{
                     new Range(from, range.from),
@@ -85,7 +76,10 @@ public class Range {
             };
         }
 
-        if (getIntersection(range) == null) {
+        double maxFrom = Math.max(from, range.from);
+        double minTo = Math.min(to, range.to);
+
+        if (maxFrom >= minTo) {
             return new Range[]{new Range(from, to)};
         }
 

@@ -48,19 +48,13 @@ public class Main {
         Range intersectionRange = range1.getIntersection(range2);
 
         if (intersectionRange == null) {
-            System.out.print("Пересечения интервалов нет");
+            System.out.println("Пересечения интервалов нет");
         } else {
-            System.out.print("Интервал пересечения: " + intersectionRange);
+            System.out.println("Интервал пересечения: " + intersectionRange);
         }
 
-        System.out.println();
+        System.out.println("Интервал объединения: " + Range.getRangesArrayString(range1.getUnion(range2)));
 
-        System.out.print("Интервал объединения: ");
-        Range.print(range1.getUnion(range2));
-
-        System.out.println();
-
-        System.out.print("Интервал разности: ");
-        Range.print(range1.getDifference(range2));
+        System.out.println("Интервал разности: " + Range.getRangesArrayString(range1.getDifference(range2)));
     }
 }
