@@ -69,13 +69,13 @@ public class Triangle implements Shape {
         double max = coordinates[0];
         double min = coordinates[0];
 
-        for (int i = 0; i < coordinates.length - 1; i++) {
-            if (max < coordinates[i + 1]) {
-                max = coordinates[i + 1];
+        for (int i = 1; i < coordinates.length; i++) {
+            if (max < coordinates[i]) {
+                max = coordinates[i];
             }
 
-            if (min > coordinates[i + 1]) {
-                min = coordinates[i + 1];
+            if (min > coordinates[i]) {
+                min = coordinates[i];
             }
         }
 
@@ -102,10 +102,10 @@ public class Triangle implements Shape {
         double side2Length = getSideLength(x1, y1, x3, y3);
         double side3Length = getSideLength(x2, y2, x3, y3);
 
-        double triangleSemiPerimeter = (side1Length + side2Length + side3Length) / 2;
+        double semiPerimeter = (side1Length + side2Length + side3Length) / 2;
 
-        return Math.sqrt(triangleSemiPerimeter * (triangleSemiPerimeter - side1Length) * (triangleSemiPerimeter - side2Length) *
-                (triangleSemiPerimeter - side3Length));
+        return Math.sqrt(semiPerimeter * (semiPerimeter - side1Length) * (semiPerimeter - side2Length) *
+                (semiPerimeter - side3Length));
     }
 
     @Override

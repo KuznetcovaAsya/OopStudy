@@ -7,7 +7,7 @@ public class Vector {
 
     public Vector(int size) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Вместимость = " + size + " Вместимость должна быть > 0");
+            throw new IllegalArgumentException("Размер = " + size + " Размер должен быть > 0");
         }
 
         elements = new double[size];
@@ -19,8 +19,7 @@ public class Vector {
         }
 
         if (elements.length == 0) {
-            throw new IllegalArgumentException(elements.length +
-                    " Длина массива должна быть > 0");
+            throw new IllegalArgumentException("Длина массива: " + elements.length + " Длина массива должна быть > 0");
         }
 
         this.elements = Arrays.copyOf(elements, elements.length);
@@ -36,11 +35,10 @@ public class Vector {
         }
 
         if (size <= 0) {
-            throw new IllegalArgumentException("Вместимость = " + size + " Вместимость должна быть > 0");
+            throw new IllegalArgumentException("Размер = " + size + " Размер должен быть > 0");
         }
 
-        int elementsMinCount = Math.min(size, elements.length);
-        this.elements = Arrays.copyOf(elements, elementsMinCount);
+        this.elements = Arrays.copyOf(elements, size);
     }
 
     public int getSize() {
@@ -52,9 +50,7 @@ public class Vector {
             elements = Arrays.copyOf(elements, vector.elements.length);
         }
 
-        int limit = Math.min(elements.length, vector.elements.length);
-
-        for (int i = 0; i < limit; i++) {
+        for (int i = 0; i < vector.elements.length; i++) {
             elements[i] += vector.elements[i];
         }
     }
@@ -64,9 +60,7 @@ public class Vector {
             elements = Arrays.copyOf(elements, vector.elements.length);
         }
 
-        int limit = Math.min(elements.length, vector.elements.length);
-
-        for (int i = 0; i < limit; i++) {
+        for (int i = 0; i < vector.elements.length; i++) {
             elements[i] -= vector.elements[i];
         }
     }
@@ -93,8 +87,7 @@ public class Vector {
 
     public double getByIndex(int index) {
         if (index < 0 || index >= elements.length) {
-            throw new IndexOutOfBoundsException("Индекс = " + index +
-                    " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
+            throw new IndexOutOfBoundsException("Индекс = " + index + " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
         }
 
         return elements[index];
@@ -102,8 +95,7 @@ public class Vector {
 
     public void setByIndex(int index, double number) {
         if (index < 0 || index >= elements.length) {
-            throw new IndexOutOfBoundsException("Индекс = " + index +
-                    " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
+            throw new IndexOutOfBoundsException("Индекс = " + index + " Индекс должен быть >= 0, индекс должен быть < " + elements.length);
         }
 
         elements[index] = number;
@@ -175,10 +167,7 @@ public class Vector {
             stringBuilder.append(", ");
         }
 
-        if (elements.length > 0) {
-            stringBuilder.setLength(stringBuilder.length() - 2);
-        }
-
+        stringBuilder.setLength(stringBuilder.length() - 2);
         stringBuilder.append("}");
 
         return stringBuilder.toString();
