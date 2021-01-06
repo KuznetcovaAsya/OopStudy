@@ -12,9 +12,11 @@ public class Main {
         list1.addByIndex(3, null);
         list1.addByIndex(4, 4);
         list1.addByIndex(5, 5);
-        list1.addByIndex(6, 6);
-        list1.addByIndex(7, 7);
+        list1.addByIndex(6, 5);
+        list1.addByIndex(7, 5);
         list1.addByIndex(8, 8);
+        list1.addByIndex(9, 9);
+        list1.addByIndex(9, 9);
         list1.addByIndex(9, 9);
         list1.addByIndex(10, 10);
 
@@ -24,12 +26,12 @@ public class Main {
 
         System.out.println("Список №2 (Копия списка №1): " + list2);
 
-        int indexToDelete = 0;
-        int elementToDelete = 8;
+        int indexToRemove = 0;
+        int elementToRemove = 5;
 
-        System.out.println("Список №2. Удален элемент " + list2.removeByIndex(indexToDelete) + " с индексом " + indexToDelete + ": " + list2);
+        System.out.println("Список №2. Удален элемент " + list2.removeByIndex(indexToRemove) + " с индексом " + indexToRemove + ": " + list2);
 
-        System.out.println("Список №2. Запрос на удаление элемента " + elementToDelete + ". Результат: " + list2.removeByData(elementToDelete) + ". " + list2);
+        System.out.println("Список №2. Запрос на удаление элемента " + elementToRemove + ". Результат: " + list2.removeByData(elementToRemove) + ". " + list2);
 
         System.out.println("Длина списка №2 равна: " + list2.getCount());
 
