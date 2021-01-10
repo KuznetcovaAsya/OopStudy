@@ -5,6 +5,14 @@ public class Person {
     private int age;
 
     public Person(String name, int age) {
+        if (name == null) {
+            throw new IllegalArgumentException("Имя не может быть null");
+        }
+
+        if (age <= 0) {
+            throw new IllegalArgumentException(age + ". Возраст должен быть > 0");
+        }
+
         this.name = name;
         this.age = age;
     }
@@ -14,6 +22,10 @@ public class Person {
     }
 
     public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Имя не может быть null");
+        }
+
         this.name = name;
     }
 
@@ -22,6 +34,10 @@ public class Person {
     }
 
     public void setAge(int age) {
+        if (age <= 0) {
+            throw new IllegalArgumentException(age + " Возраст должен быть > 0");
+        }
+
         this.age = age;
     }
 

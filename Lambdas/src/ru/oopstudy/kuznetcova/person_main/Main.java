@@ -8,7 +8,7 @@ import java.util.stream.*;
 public class Main {
     public static void main(String[] args) {
         List<Person> persons = Arrays.asList(
-                new Person("Сергей", 12),
+                new Person("Сергей", 35),
                 new Person("Андрей", 32),
                 new Person("Ольга", 20),
                 new Person("Александр", 50),
@@ -21,7 +21,8 @@ public class Main {
                 new Person("Ольга", 13),
                 new Person("Андрей", 32),
                 new Person("Юлия", 20),
-                new Person("Кристина", 25));
+                new Person("Кристина", 25)
+        );
 
         printUniqueNames(persons);
         printAverageAgeOfMinors(persons);
@@ -30,9 +31,7 @@ public class Main {
     }
 
     public static void printUniqueNames(List<Person> persons) {
-        Stream<Person> stream = persons.stream();
-
-        String uniqueNames = stream
+        String uniqueNames = persons.stream()
                 .map(Person::getName)
                 .distinct()
                 .collect(Collectors.joining(", ", "Имена: ", "."));
@@ -41,11 +40,11 @@ public class Main {
     }
 
     public static void printAverageAgeOfMinors(List<Person> persons) {
-        Stream<Person> stream = persons.stream();
+        final int legalAge = 18;
 
-        OptionalDouble average = stream
+        OptionalDouble average = persons.stream()
                 .mapToInt(Person::getAge)
-                .filter(x -> x < 18)
+                .filter(x -> x < legalAge)
                 .average();
 
         if (average.isPresent()) {
