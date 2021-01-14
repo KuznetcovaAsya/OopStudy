@@ -20,7 +20,7 @@ public class SinglyLinkedList<T> {
     }
 
     public void addByIndex(int index, T data) {
-        checkPositionIndex(index);
+        checkIndexToInsert(index);
 
         if (index == 0) {
             addFirst(data);
@@ -43,18 +43,20 @@ public class SinglyLinkedList<T> {
     }
 
     public T getByIndex(int index) {
-        checkElementIndex(index);
+        checkIndex(index);
 
         ListItem<T> item = getItem(index);
+
         return item.getData();
     }
 
     public T setByIndex(int index, T data) {
-        checkPositionIndex(index);
+        checkIndexToInsert(index);
 
         ListItem<T> item = getItem(index);
         T previousData = item.getData();
         item.setData(data);
+
         return previousData;
     }
 
@@ -79,11 +81,12 @@ public class SinglyLinkedList<T> {
         }
 
         result.count = count;
+
         return result;
     }
 
     public T removeByIndex(int index) {
-        checkPositionIndex(index);
+        checkIndex(index);
 
         if (index == 0) {
             return removeFirst();
@@ -94,6 +97,7 @@ public class SinglyLinkedList<T> {
         T removedData = previousItem.getNext().getData();
         previousItem.setNext(previousItem.getNext().getNext());
         count--;
+
         return removedData;
     }
 
@@ -105,6 +109,7 @@ public class SinglyLinkedList<T> {
         T removedData = head.getData();
         head = head.getNext();
         count--;
+
         return removedData;
     }
 
@@ -150,7 +155,6 @@ public class SinglyLinkedList<T> {
             item.setNext(previousItem);
             previousItem = item;
             item = nextItem;
-
         }
 
         head = previousItem;
@@ -178,13 +182,13 @@ public class SinglyLinkedList<T> {
         return stringBuilder.toString();
     }
 
-    private void checkElementIndex(int index) {
+    private void checkIndex(int index) {
         if (index < 0 || index >= count) {
             throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + count);
         }
     }
 
-    private void checkPositionIndex(int index) {
+    private void checkIndexToInsert(int index) {
         if (index < 0 || index > count) {
             throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и <= " + count);
         }
@@ -192,11 +196,9 @@ public class SinglyLinkedList<T> {
 
     private ListItem<T> getItem(int index) {
         ListItem<T> item = head;
-        int i = 0;
 
-        while (i < index) {
+        for (int i = 0; i < index; i++) {
             item = item.getNext();
-            i++;
         }
 
         return item;
