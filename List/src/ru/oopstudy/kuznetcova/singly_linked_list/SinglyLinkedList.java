@@ -20,7 +20,7 @@ public class SinglyLinkedList<T> {
     }
 
     public void addByIndex(int index, T data) {
-        checkIndexToInsert(index);
+        checkIndexForAdd(index);
 
         if (index == 0) {
             addFirst(data);
@@ -51,13 +51,13 @@ public class SinglyLinkedList<T> {
     }
 
     public T setByIndex(int index, T data) {
-        checkIndexToInsert(index);
+        checkIndex(index);
 
         ListItem<T> item = getItem(index);
-        T previousData = item.getData();
+        T oldData = item.getData();
         item.setData(data);
 
-        return previousData;
+        return oldData;
     }
 
     public SinglyLinkedList<T> getCopy() {
@@ -188,7 +188,7 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    private void checkIndexToInsert(int index) {
+    private void checkIndexForAdd(int index) {
         if (index < 0 || index > count) {
             throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и <= " + count);
         }
