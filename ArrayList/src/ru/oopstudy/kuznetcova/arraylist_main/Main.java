@@ -26,11 +26,11 @@ public class Main {
         System.out.println("Коллекция 1: " + collection1);
 
         ArrayList<Integer> collection2 = new ArrayList<>(6);
-        collection2.add(55);
+        collection2.add(1);
         collection2.add(70);
-        collection2.add(26);
+        collection2.add(7);
         collection2.add(13);
-        collection2.add(98);
+        collection2.add(17);
         collection2.add(5);
         System.out.println("Коллекция 2: " + collection2);
 
