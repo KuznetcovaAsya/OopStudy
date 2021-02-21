@@ -21,7 +21,7 @@ public class DesktopView implements View {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Конвертер температур");
 
-            frame.setSize(500, 300);
+            frame.setSize(400, 250);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.setResizable(false);
@@ -31,12 +31,13 @@ public class DesktopView implements View {
 
             JLabel title = new JLabel("Введите температуру:");
 
-            title.setBorder(new EmptyBorder(0, 10, 20, 10));
-            title.setFont(new Font("Arial", Font.PLAIN, 25));
+            title.setBorder(new EmptyBorder(0, 10, 10, 10));
+            title.setFont(new Font("Arial", Font.PLAIN, 20));
 
             GridBagConstraints constraints = new GridBagConstraints();
 
             constraints.fill = GridBagConstraints.BOTH;
+            constraints.gridx = 0;
             constraints.gridwidth = 2;
             panel.add(title, constraints);
 
@@ -50,7 +51,7 @@ public class DesktopView implements View {
 
             toLabel.setPreferredSize(new Dimension(150, 50));
             toLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-            toLabel.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY, 1),
+            toLabel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1),
                     new EmptyBorder(0, 10, 0, 10)));
             toLabel.setOpaque(true);
             toLabel.setBackground(Color.WHITE);
@@ -95,8 +96,8 @@ public class DesktopView implements View {
 
             constraints.insets.set(10, 0, 0, 0);
             constraints.gridwidth = 2;
-            constraints.gridy = 3;
             constraints.gridx = 0;
+            constraints.gridy = 3;
             panel.add(convertButton, constraints);
 
             frame.setVisible(true);

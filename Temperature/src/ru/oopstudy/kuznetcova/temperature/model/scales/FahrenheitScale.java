@@ -13,6 +13,6 @@ public class FahrenheitScale implements TemperatureScale {
 
     @Override
     public String toString() {
-        return "Фаренгейта";
+        return "Фаренгейта, °F";
     }
 }

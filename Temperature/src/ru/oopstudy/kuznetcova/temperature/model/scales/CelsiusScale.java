@@ -13,6 +13,6 @@ public class CelsiusScale implements TemperatureScale {
 
     @Override
     public String toString() {
-        return "Цельсия";
+        return "Цельсия, °C";
     }
 }

@@ -13,6 +13,6 @@ public class KelvinScale implements TemperatureScale {
 
     @Override
     public String toString() {
-        return "Кельвина";
+        return "Кельвина, °K";
     }
 }
