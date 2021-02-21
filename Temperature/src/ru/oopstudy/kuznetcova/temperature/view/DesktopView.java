@@ -1,56 +1,103 @@
 package ru.oopstudy.kuznetcova.temperature.view;
 
-import ru.oopstudy.kuznetcova.temperature.model.Converter;
+import ru.oopstudy.kuznetcova.temperature.model.TemperatureConverter;
+import ru.oopstudy.kuznetcova.temperature.model.scales.TemperatureScale;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class DesktopView implements View {
-    private final Converter temperatureConverter;
+    private final TemperatureConverter converter;
 
-    public DesktopView(Converter converter) {
-        this.temperatureConverter = converter;
+    public DesktopView(TemperatureConverter converter) {
+        this.converter = converter;
     }
 
     @Override
     public void start() {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Конвертер температур");
-            frame.setSize(550, 300);
+
+            frame.setSize(500, 300);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.setResizable(false);
 
-            frame.setLayout(new GridLayout(4, 2));
+            JPanel panel = new JPanel(new GridBagLayout());
+            frame.add(panel);
 
-            JLabel celsiusLabel = new JLabel("Введите температуру в градусах Цельсия");
-            frame.add(celsiusLabel);
+            JLabel title = new JLabel("Введите температуру:");
 
-            JTextField celsiusTemperatureField = new JTextField(10);
-            frame.add(celsiusTemperatureField);
+            title.setBorder(new EmptyBorder(0, 10, 20, 10));
+            title.setFont(new Font("Arial", Font.PLAIN, 25));
 
-            JLabel kelvinLabel = new JLabel("Температура в градусах Кельвина");
-            frame.add(kelvinLabel);
-            JLabel kelvinTemperatureLabel = new JLabel();
-            frame.add(kelvinTemperatureLabel);
+            GridBagConstraints constraints = new GridBagConstraints();
 
-            JLabel fahrenheitLabel = new JLabel("Температура в градусах Фаренгейта");
-            frame.add(fahrenheitLabel);
-            JLabel fahrenheitTemperatureLabel = new JLabel();
-            frame.add(fahrenheitTemperatureLabel);
+            constraints.fill = GridBagConstraints.BOTH;
+            constraints.gridwidth = 2;
+            panel.add(title, constraints);
+
+            JTextField fromTextField = new JFormattedTextField();
+
+            fromTextField.setPreferredSize(new Dimension(150, 50));
+            fromTextField.setFont(new Font("Arial", Font.PLAIN, 30));
+            fromTextField.setMargin(new Insets(0, 10, 0, 10));
+
+            JLabel toLabel = new JLabel();
+
+            toLabel.setPreferredSize(new Dimension(150, 50));
+            toLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+            toLabel.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY, 1),
+                    new EmptyBorder(0, 10, 0, 10)));
+            toLabel.setOpaque(true);
+            toLabel.setBackground(Color.WHITE);
+
+            constraints.gridwidth = 1;
+            constraints.gridy = 1;
+            constraints.insets.set(0, 7, 0, 7);
+            panel.add(fromTextField, constraints);
+
+            constraints.gridx = 1;
+            panel.add(toLabel, constraints);
+
+            JComboBox<TemperatureScale> fromComboBox = new JComboBox<>(converter.getTemperatureScales());
+            fromComboBox.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            JComboBox<TemperatureScale> toComboBox = new JComboBox<>(converter.getTemperatureScales());
+            toComboBox.setFont(new Font("Arial", Font.PLAIN, 15));
+
+            constraints.gridx = 0;
+            constraints.gridy = 2;
+            panel.add(fromComboBox, constraints);
+
+            constraints.gridx = 1;
+            panel.add(toComboBox, constraints);
 
             JButton convertButton = new JButton("Перевести температуру");
             convertButton.addActionListener(e -> {
                 try {
-                    double celsiusTemperature = Double.parseDouble(celsiusTemperatureField.getText());
+                    double temperature = Double.parseDouble(fromTextField.getText());
 
-                    kelvinTemperatureLabel.setText(Double.toString(temperatureConverter.convertToKelvin(celsiusTemperature)));
-                    fahrenheitTemperatureLabel.setText(Double.toString(temperatureConverter.convertToFahrenheit(celsiusTemperature)));
+                    TemperatureScale fromScale = fromComboBox.getItemAt(fromComboBox.getSelectedIndex());
+                    TemperatureScale toScale = toComboBox.getItemAt(toComboBox.getSelectedIndex());
+
+                    toLabel.setText(Double.toString(converter.convert(temperature, fromScale, toScale)));
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Температура должна быть числом");
+                    JOptionPane.showMessageDialog(frame, "Температура должна быть числом", "Ошибка", JOptionPane.INFORMATION_MESSAGE);
                 }
             });
 
-            frame.add(convertButton);
+            convertButton.setPreferredSize(new Dimension(200, 50));
+            convertButton.setFont(new Font("Arial", Font.PLAIN, 20));
+
+            constraints.insets.set(10, 0, 0, 0);
+            constraints.gridwidth = 2;
+            constraints.gridy = 3;
+            constraints.gridx = 0;
+            panel.add(convertButton, constraints);
 
             frame.setVisible(true);
         });

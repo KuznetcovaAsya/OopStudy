@@ -1,11 +1,19 @@
 package ru.oopstudy.kuznetcova.temperature.model;
 
-public class Converter {
-    public double convertToKelvin(double celsiusTemperature) {
-        return celsiusTemperature + 273.15;
+import ru.oopstudy.kuznetcova.temperature.model.scales.TemperatureScale;
+
+public class Converter implements TemperatureConverter {
+    private final TemperatureScale[] scales;
+
+    public Converter(TemperatureScale[] scales) {
+        this.scales = scales;
     }
 
-    public double convertToFahrenheit(double celsiusTemperature) {
-        return celsiusTemperature * 9 / 5 + 32;
+    public TemperatureScale[] getTemperatureScales() {
+        return scales;
+    }
+
+    public double convert(double temperature, TemperatureScale fromScale, TemperatureScale toScale) {
+        return toScale.convertFromCelsius(fromScale.convertToCelsius(temperature));
     }
 }
