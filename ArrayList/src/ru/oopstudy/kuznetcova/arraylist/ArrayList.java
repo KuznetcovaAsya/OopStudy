@@ -4,12 +4,14 @@ import java.util.*;
 import java.util.Arrays;
 
 public class ArrayList<T> implements List<T> {
+    private static final int DEFAULT_CAPACITY = 10;
+
     private T[] items;
     private int size;
     private int modCount;
 
     public ArrayList() {
-        items = (T[]) new Object[10];
+        items = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
     public ArrayList(int capacity) {
@@ -68,11 +70,9 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T item) {
-        if (items.length > 0) {
-            checkIndexToAdd(index);
-        }
+        checkIndexToAdd(index);
 
-        if (items.length == 0 || size >= items.length) {
+        if (size >= items.length) {
             increaseCapacity();
         }
 
@@ -85,16 +85,12 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> collection) {
-        addAll(size, collection);
-
-        return true;
+        return addAll(size, collection);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> collection) {
-        if (items.length > 0) {
-            checkIndexToAdd(index);
-        }
+        checkIndexToAdd(index);
 
         if (collection.size() == 0) {
             return false;
@@ -293,10 +289,10 @@ public class ArrayList<T> implements List<T> {
 
     private void increaseCapacity() {
         if (items.length == 0) {
-            items = Arrays.copyOf(items, 10);
+            items = (T[]) new Object[DEFAULT_CAPACITY];
+        } else {
+            items = Arrays.copyOf(items, items.length * 2);
         }
-
-        items = Arrays.copyOf(items, items.length * 2);
     }
 
     public void ensureCapacity(int capacity) {
@@ -308,7 +304,6 @@ public class ArrayList<T> implements List<T> {
     public void trimToSize() {
         if (size < items.length) {
             items = Arrays.copyOf(items, size);
-            modCount++;
         }
     }
 
