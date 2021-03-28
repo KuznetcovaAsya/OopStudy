@@ -1,16 +1,22 @@
 package ru.oopstudy.kuznetcova.matrix;
 
+import ru.oopstudy.kuznetcova.vector.Vector;
+
 import java.util.Arrays;
 
 public class Matrix {
-    private double[][] elements;
+    private Vector[] vectors;
 
-    public Matrix(int length, int height) {
-        if (length <= 0 || height <= 0) {
-            throw new IllegalArgumentException("Длина = " + length + " , высота = " + height + ". Размеры матрицы должны быть > 0");
+    public Matrix(int rowsCount, int columnsCount) {
+        if (columnsCount <= 0 || rowsCount <= 0) {
+            throw new IllegalArgumentException("Длина = " + columnsCount + " , высота = " + rowsCount + ". Размеры матрицы должны быть > 0");
         }
 
-        elements = new double[height][length];
+        vectors = new Vector[rowsCount];
+
+        for (int i = 0; i < vectors.length; i++) {
+            vectors[i] = new Vector(columnsCount);
+        }
     }
 
     public Matrix(double[][] array) {
@@ -20,43 +26,57 @@ public class Matrix {
 
         int matrixLength = getMaxVectorLengthFromArray(array);
 
-        elements = new double[array.length][matrixLength];
+        vectors = new Vector[array.length];
 
-        for (int i = 0; i < array.length; i++) {
-            System.arraycopy(array[i], 0, elements[i], 0, array[i].length);
+        for (int i = 0; i < vectors.length; i++) {
+            vectors[i] = new Vector(matrixLength);
+
+            for (int j = 0; j < matrixLength; j++) {
+                if (j < array[i].length) {
+                    vectors[i].setByIndex(j, array[i][j]);
+                } else {
+                    vectors[i].setByIndex(j, 0);
+                }
+            }
         }
     }
 
     public Matrix(Matrix matrix) {
-        this(matrix.elements);
+        this(matrix.vectors);
     }
 
     public Matrix(Vector[] vectors) {
-        int matrixLength = getMaxVectorLengthFromVectors(vectors);
+        int columnsCount = getMaxVectorLengthFromVectors(vectors);
 
-        elements = new double[vectors.length][matrixLength];
+        this.vectors = new Vector[vectors.length];
 
-        for (int i = 0; i < vectors.length; i++) {
-            for (int j = 0; j < vectors[i].getSize(); j++) {
-                elements[i][j] = vectors[i].getByIndex(j);
+        for (int i = 0; i < this.vectors.length; i++) {
+            this.vectors[i] = new Vector(columnsCount);
+
+            for (int j = 0; j < columnsCount; j++) {
+                if (j < vectors[i].getSize()) {
+                    this.vectors[i].setByIndex(j, vectors[i].getByIndex(j));
+                } else {
+                    this.vectors[i].setByIndex(j, 0);
+                }
             }
         }
     }
 
     public int getLength() {
-        return elements[0].length;
+        return vectors[0].getSize();
     }
 
     public int getHeight() {
-        return elements.length;
+        return vectors.length;
     }
 
-    public Vector getVectorByIndexFromLine(int index) {
+    public Vector getVectorByIndexFromRow(int index) {
         if (index < 0 || index >= getHeight()) {
             throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + getHeight());
         }
 
-        return new Vector(elements[index]);
+        return new Vector(vectors[index]);
     }
 
     public void setVectorByIndex(int index, Vector vector) {
@@ -70,11 +90,13 @@ public class Matrix {
 
         int vectorLength = vector.getSize();
 
-        for (int i = 0; i < elements[index].length; i++) {
-            if (i < vectorLength) {
-                elements[index][i] = vector.getByIndex(i);
-            } else {
-                elements[index][i] = 0;
+        for (Vector value : vectors) {
+            for (int j = 0; j < value.getSize(); j++) {
+                if (j < vectorLength) {
+                    vectors[index].setByIndex(j, vector.getByIndex(j));
+                } else {
+                    vectors[index].setByIndex(j, 0);
+                }
             }
         }
     }
@@ -86,10 +108,10 @@ public class Matrix {
 
         double[] vector = new double[getHeight()];
 
-        for (int i = 0; i < elements.length; i++) {
-            for (int j = 0; j < elements[i].length; j++) {
+        for (int i = 0; i < vectors.length; i++) {
+            for (int j = 0; j < vectors[i].getSize(); j++) {
                 if (j == index) {
-                    vector[i] = elements[i][j];
+                    vector[i] = vectors[i].getByIndex(j);
                 }
             }
         }
@@ -98,10 +120,8 @@ public class Matrix {
     }
 
     public void multiplyByScalar(double number) {
-        for (int i = 0; i < elements.length; i++) {
-            for (int j = 0; j < elements[i].length; j++) {
-                elements[i][j] *= number;
-            }
+        for (Vector vector : vectors) {
+            vector.multiplyByScalar(number);
         }
     }
 
@@ -110,29 +130,25 @@ public class Matrix {
             throw new IndexOutOfBoundsException("Длина вектора: " + vector.getSize() + ": Длина вектора должна быть <= " + getLength());
         }
 
-        int vectorLength = vector.getSize();
-
-        for (int i = 0; i < elements.length; i++) {
-            for (int j = 0; j < elements[i].length; j++) {
-                if (i < vectorLength) {
-                    elements[i][j] *= vector.getByIndex(j);
+        for (Vector value : vectors) {
+            for (int j = 0; j < value.getSize(); j++) {
+                if (j < vector.getSize()) {
+                    value.setByIndex(j, value.getByIndex(j) * vector.getByIndex(j));
                 } else {
-                    elements[i][j] = 0;
+                    value.setByIndex(j, 0);
                 }
             }
         }
     }
 
     public void transposed() {
-        double[][] transposedElements = new double[getLength()][getHeight()];
+        Vector[] transposedElements = new Vector[getLength()];
 
         for (int i = 0; i < transposedElements.length; i++) {
-            for (int j = 0; j < transposedElements[i].length; j++) {
-                transposedElements[i][j] = elements[j][i];
-            }
+            transposedElements[i] = getVectorByIndexFromColumn(i);
         }
 
-        elements = Arrays.copyOf(transposedElements, transposedElements.length);
+        vectors = Arrays.copyOf(transposedElements, transposedElements.length);
     }
 
     public void add(Matrix matrix) {
@@ -144,9 +160,17 @@ public class Matrix {
             throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getHeight() + ". Высота матрицы должна быть <= " + getHeight());
         }
 
-        for (int i = 0; i < matrix.elements.length; i++) {
-            for (int j = 0; j < matrix.elements[i].length; j++) {
-                elements[i][j] += matrix.elements[i][j];
+        for (int i = 0; i < vectors.length; i++) {
+            for (int j = 0; j < vectors[i].getSize(); j++) {
+                if (i < matrix.vectors.length) {
+                    if (j < matrix.vectors[i].getSize()) {
+                        vectors[i].setByIndex(j, vectors[i].getByIndex(j) + matrix.vectors[i].getByIndex(j));
+                    } else {
+                        vectors[i].setByIndex(j, vectors[i].getByIndex(j));
+                    }
+                } else {
+                    vectors[i].setByIndex(j, vectors[i].getByIndex(j));
+                }
             }
         }
     }
@@ -160,65 +184,19 @@ public class Matrix {
             throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getHeight() + ". Высота матрицы должна быть <= " + getHeight());
         }
 
-        for (int i = 0; i < matrix.elements.length; i++) {
-            for (int j = 0; j < matrix.elements[i].length; j++) {
-                elements[i][j] -= matrix.elements[i][j];
-            }
-        }
-    }
-
-    public double getDeterminant() {
-        double[][] elementsForCalculate = Arrays.copyOf(elements, elements.length);
-        return calculateDeterminant(elementsForCalculate);
-    }
-
-    public double calculateDeterminant(double[][] elementsForCalculate) {
-        double determinant = 0;
-
-        if (elementsForCalculate.length == 2) {
-            determinant = elementsForCalculate[0][0] * elementsForCalculate[1][1] - elementsForCalculate[1][0] * elementsForCalculate[0][1];
-        } else {
-            int coefficient;
-
-            for (int i = 0; i < elementsForCalculate.length; i++) {
-                if (i % 2 == 1) {  // Раскладываем всегда по нулевой строке, проверяем на четность значение i+0.
-                    coefficient = -1;
-                } else {
-                    coefficient = 1;
-                }
-
-                determinant += coefficient * elementsForCalculate[0][i] * calculateDeterminant(getMinor(elementsForCalculate, 0, i));
-            }
-        }
-
-        return determinant;
-    }
-
-    // На входе матрица, из которой надо достать минор и номера строк-столбцов, к-е надо вычеркнуть.
-    private double[][] getMinor(double[][] elements, int row, int column) {
-        int minorLength = elements.length - 1;
-        double[][] minor = new double[minorLength][minorLength];
-
-        int skipRow = 0; // Чтобы "пропускать" ненужные нам строку и столбец
-        int skipColumn;
-
-        for (int i = 0; i <= minorLength; i++) {
-            skipColumn = 0;
-
-            for (int j = 0; j <= minorLength; j++) {
-                if (i == row) {
-                    skipRow = 1;
-                } else {
-                    if (j == column) {
-                        skipColumn = 1;
+        for (int i = 0; i < vectors.length; i++) {
+            for (int j = 0; j < vectors[i].getSize(); j++) {
+                if (i < matrix.vectors.length) {
+                    if (j < matrix.vectors[i].getSize()) {
+                        vectors[i].setByIndex(j, vectors[i].getByIndex(j) - matrix.vectors[i].getByIndex(j));
                     } else {
-                        minor[i - skipRow][j - skipColumn] = elements[i][j];
+                        vectors[i].setByIndex(j, vectors[i].getByIndex(j));
                     }
+                } else {
+                    vectors[i].setByIndex(j, vectors[i].getByIndex(j));
                 }
             }
         }
-
-        return minor;
     }
 
     public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
@@ -245,16 +223,18 @@ public class Matrix {
         }
 
         Matrix product = new Matrix(matrix1);
-        int matrixLength = getMaxVectorLengthFromArray(matrix1.elements);
-        double[][] matrix2Array = new double[matrix1.elements.length][matrixLength];
 
-        for (int i = 0; i < matrix2.elements.length; i++) {
-            System.arraycopy(matrix2.elements[i], 0, matrix2Array[i], 0, matrix2.elements[i].length);
-        }
-
-        for (int i = 0; i < matrix1.elements.length; i++) {
-            for (int j = 0; j < matrix1.elements[i].length; j++) {
-                product.elements[i][j] *= matrix2Array[i][j];
+        for (int i = 0; i < product.vectors.length; i++) {
+            for (int j = 0; j < product.vectors[i].getSize(); j++) {
+                if (i < matrix2.vectors.length) {
+                    if (j < matrix2.vectors[i].getSize()) {
+                        product.vectors[i].setByIndex(j, product.vectors[i].getByIndex(j) * matrix2.vectors[i].getByIndex(j));
+                    } else {
+                        product.vectors[i].setByIndex(j, 0);
+                    }
+                } else {
+                    product.vectors[i].setByIndex(j, 0);
+                }
             }
         }
 
@@ -304,26 +284,16 @@ public class Matrix {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{");
 
-        for (int i = 0; i < elements.length; i++) {
-            stringBuilder.append("{");
-
-            for (int j = 0; j < elements[i].length; j++) {
-                stringBuilder.append(elements[i][j]);
-
-                if (j < elements[i].length - 1) {
-                    stringBuilder.append(", ");
-                }
-            }
-
-            stringBuilder.append("}");
-
-            if (i < elements.length - 1) {
-                stringBuilder.append(", ");
-                stringBuilder.append(System.getProperty("line.separator"));
-            }
+        for (Vector vector : vectors) {
+            stringBuilder.append(vector.toString());
+            stringBuilder.append(",");
+            stringBuilder.append(System.lineSeparator());
         }
 
+        stringBuilder.setLength(stringBuilder.length() - 3);
+
         stringBuilder.append("}");
+
         return stringBuilder.toString();
     }
 }

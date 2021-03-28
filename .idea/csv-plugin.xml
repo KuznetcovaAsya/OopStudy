@@ -24,6 +24,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Matrix\src\ru\oopstudy\kuznetcova\matrix\Matrix.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Matrix\src\ru\oopstudy\kuznetcova\matrix_main\Main.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Vector\src\ru\oopstudy\kuznetcova\vector\Vector.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
