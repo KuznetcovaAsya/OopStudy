@@ -60,5 +60,12 @@ public class Main {
 
         matrix6.transposed();
         System.out.println(matrix6 + " Матрица 6 транспонированная");
+        System.out.println();
+
+        Matrix matrix7 = new Matrix(new double[][]{{6, 2, 3}, {1, 7, 3}, {0, 7, 9}});
+        System.out.println(matrix7 + " Матрица 7");
+        System.out.println();
+
+        System.out.println(matrix7.getDeterminant() + " Детерминант Матрицы 7");
     }
 }

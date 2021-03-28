@@ -63,29 +63,29 @@ public class Matrix {
         }
     }
 
-    public int getLength() {
+    public int getColumnsCount() {
         return vectors[0].getSize();
     }
 
-    public int getHeight() {
+    public int getRowsCount() {
         return vectors.length;
     }
 
     public Vector getVectorByIndexFromRow(int index) {
-        if (index < 0 || index >= getHeight()) {
-            throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + getHeight());
+        if (index < 0 || index >= getRowsCount()) {
+            throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + getRowsCount());
         }
 
         return new Vector(vectors[index]);
     }
 
     public void setVectorByIndex(int index, Vector vector) {
-        if (vector.getSize() > getLength()) {
-            throw new IndexOutOfBoundsException("Длина вектора: " + vector.getSize() + ": Длина вектора должна быть <= " + getLength());
+        if (vector.getSize() > getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Длина вектора: " + vector.getSize() + ": Длина вектора должна быть <= " + getColumnsCount());
         }
 
-        if (index >= getHeight()) {
-            throw new ArrayIndexOutOfBoundsException("Индекс = " + index + ": Индекс должен быть < " + getHeight());
+        if (index >= getRowsCount()) {
+            throw new ArrayIndexOutOfBoundsException("Индекс = " + index + ": Индекс должен быть < " + getRowsCount());
         }
 
         int vectorLength = vector.getSize();
@@ -102,11 +102,11 @@ public class Matrix {
     }
 
     public Vector getVectorByIndexFromColumn(int index) {
-        if (index < 0 || index >= getLength()) {
-            throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + getLength());
+        if (index < 0 || index >= getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Индекс: " + index + ". Индекс должен быть >= 0 и < " + getColumnsCount());
         }
 
-        double[] vector = new double[getHeight()];
+        double[] vector = new double[getRowsCount()];
 
         for (int i = 0; i < vectors.length; i++) {
             for (int j = 0; j < vectors[i].getSize(); j++) {
@@ -126,8 +126,8 @@ public class Matrix {
     }
 
     public void multiplyByVector(Vector vector) {
-        if (vector.getSize() > getLength()) {
-            throw new IndexOutOfBoundsException("Длина вектора: " + vector.getSize() + ": Длина вектора должна быть <= " + getLength());
+        if (vector.getSize() > getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Длина вектора: " + vector.getSize() + ": Длина вектора должна быть <= " + getColumnsCount());
         }
 
         for (Vector value : vectors) {
@@ -142,7 +142,7 @@ public class Matrix {
     }
 
     public void transposed() {
-        Vector[] transposedElements = new Vector[getLength()];
+        Vector[] transposedElements = new Vector[getColumnsCount()];
 
         for (int i = 0; i < transposedElements.length; i++) {
             transposedElements[i] = getVectorByIndexFromColumn(i);
@@ -152,12 +152,12 @@ public class Matrix {
     }
 
     public void add(Matrix matrix) {
-        if (getLength() < matrix.getLength()) {
-            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix.getLength() + ". Длина матрицы должна быть <= " + getLength());
+        if (getColumnsCount() < matrix.getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix.getColumnsCount() + ". Длина матрицы должна быть <= " + getColumnsCount());
         }
 
-        if (getHeight() < matrix.getHeight()) {
-            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getHeight() + ". Высота матрицы должна быть <= " + getHeight());
+        if (getRowsCount() < matrix.getRowsCount()) {
+            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getRowsCount() + ". Высота матрицы должна быть <= " + getRowsCount());
         }
 
         for (int i = 0; i < vectors.length; i++) {
@@ -176,12 +176,12 @@ public class Matrix {
     }
 
     public void subtract(Matrix matrix) {
-        if (getLength() < matrix.getLength()) {
-            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix.getLength() + ". Длина матрицы должна быть <= " + getLength());
+        if (getColumnsCount() < matrix.getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix.getColumnsCount() + ". Длина матрицы должна быть <= " + getColumnsCount());
         }
 
-        if (getHeight() < matrix.getHeight()) {
-            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getHeight() + ". Высота матрицы должна быть <= " + getHeight());
+        if (getRowsCount() < matrix.getRowsCount()) {
+            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix.getRowsCount() + ". Высота матрицы должна быть <= " + getRowsCount());
         }
 
         for (int i = 0; i < vectors.length; i++) {
@@ -214,12 +214,12 @@ public class Matrix {
     }
 
     public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
-        if (matrix1.getLength() < matrix2.getLength()) {
-            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix2.getLength() + ". Длина матрицы должна быть <= " + matrix1.getLength());
+        if (matrix1.getColumnsCount() < matrix2.getColumnsCount()) {
+            throw new IndexOutOfBoundsException("Длина матрицы = " + matrix2.getColumnsCount() + ". Длина матрицы должна быть <= " + matrix1.getColumnsCount());
         }
 
-        if (matrix1.getHeight() < matrix2.getHeight()) {
-            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix2.getHeight() + ". Высота матрицы должна быть <= " + matrix1.getHeight());
+        if (matrix1.getRowsCount() < matrix2.getRowsCount()) {
+            throw new IndexOutOfBoundsException("Высота матрицы = " + matrix2.getRowsCount() + ". Высота матрицы должна быть <= " + matrix1.getRowsCount());
         }
 
         Matrix product = new Matrix(matrix1);
@@ -239,6 +239,71 @@ public class Matrix {
         }
 
         return product;
+    }
+
+    public double getDeterminant() {
+        if (getRowsCount() != getColumnsCount()) {
+            throw new IllegalArgumentException("Строк: " + getRowsCount() + ". Столбцов: " + getColumnsCount() + ". Детерминант можно вычислить только для квадратной матрицы");
+        }
+
+        double[][] elementsForDeterminantCalculate = new double[getRowsCount()][getColumnsCount()];
+
+        for (int i = 0; i < vectors.length; i++) {
+            for (int j = 0; j < vectors[i].getSize(); j++) {
+                elementsForDeterminantCalculate[i][j] = vectors[i].getByIndex(j);
+            }
+        }
+
+        return calculateDeterminant(elementsForDeterminantCalculate);
+    }
+
+    public double calculateDeterminant(double[][] elementsForDeterminantCalculate) {
+        double determinant = 0;
+
+        if (elementsForDeterminantCalculate.length == 2) {
+            determinant = elementsForDeterminantCalculate[0][0] * elementsForDeterminantCalculate[1][1] - elementsForDeterminantCalculate[1][0] * elementsForDeterminantCalculate[0][1];
+        } else {
+            int coefficient;
+
+            for (int i = 0; i < elementsForDeterminantCalculate.length; i++) {
+                if (i % 2 == 1) {  // Раскладываем всегда по нулевой строке, проверяем на четность значение i+0.
+                    coefficient = -1;
+                } else {
+                    coefficient = 1;
+                }
+
+                determinant += coefficient * elementsForDeterminantCalculate[0][i] * calculateDeterminant(getMinor(elementsForDeterminantCalculate, 0, i));
+            }
+        }
+
+        return determinant;
+    }
+
+    // На входе матрица, из которой надо достать минор и номера строк-столбцов, к-е надо вычеркнуть.
+    private double[][] getMinor(double[][] elements, int row, int column) {
+        int minorLength = elements.length - 1;
+        double[][] minor = new double[minorLength][minorLength];
+
+        int skipRow = 0; // Чтобы "пропускать" ненужные нам строку и столбец
+        int skipColumn;
+
+        for (int i = 0; i <= minorLength; i++) {
+            skipColumn = 0;
+
+            for (int j = 0; j <= minorLength; j++) {
+                if (i == row) {
+                    skipRow = 1;
+                } else {
+                    if (j == column) {
+                        skipColumn = 1;
+                    } else {
+                        minor[i - skipRow][j - skipColumn] = elements[i][j];
+                    }
+                }
+            }
+        }
+
+        return minor;
     }
 
     private static int getMaxVectorLengthFromArray(double[][] array) {
