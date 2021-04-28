@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\ArrayList\src\ru\oopstudy\kuznetcova\arraylist\ArrayList.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Csv\src\ru\oopstudy\kuznetcova\csv_main\Main.java">
           <value>
             <Attribute>
@@ -21,6 +28,20 @@
           <value>
             <Attribute>
               <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\HashTable\src\ru\oopstudy\kuznetcova\hashtable\HashTable.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\HashTable\src\ru\oopstudy\kuznetcova\hashtable_main\Main.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
             </Attribute>
           </value>
         </entry>
