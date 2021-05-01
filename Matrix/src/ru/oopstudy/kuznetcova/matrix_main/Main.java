@@ -26,8 +26,7 @@ public class Main {
         System.out.println(matrix1.getColumn(0) + " Получить вектор-столбец по индексу 0 из Матрицы 1");
         System.out.println();
 
-        matrix1.multiplyByVector(new Vector(vector1));
-        System.out.println(matrix1 + " Матрица 1. Умножить Матрицу 1 на Вектор 1");
+        System.out.println(matrix1.multiplyByVector(new Vector(vector1)) + " Вектор 4. Умножить Матрицу 1 на Вектор 1");
         System.out.println();
 
         Matrix matrix2 = new Matrix(new Vector[]{vector2, vector3});
