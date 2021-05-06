@@ -125,7 +125,6 @@ public class HashTable<T> implements Collection<T> {
         }
     }
 
-
     @Override
     public boolean remove(Object o) {
         int index = getListIndex(o);
