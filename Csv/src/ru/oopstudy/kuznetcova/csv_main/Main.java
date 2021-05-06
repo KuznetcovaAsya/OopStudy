@@ -11,7 +11,7 @@ public class Main {
             return;
         }
 
-        try (Scanner scanner = new Scanner(args[0]);
+        try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
              PrintWriter writer = new PrintWriter(args[1])) {
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
