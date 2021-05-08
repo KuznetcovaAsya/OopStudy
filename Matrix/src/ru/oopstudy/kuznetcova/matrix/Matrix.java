@@ -19,7 +19,7 @@ public class Matrix {
 
     public Matrix(double[][] array) {
         if (array == null) {
-            throw new NullPointerException("Массив не может быть null");
+            throw new IllegalArgumentException("Массив не может быть null");
         }
 
         if (array.length == 0) {
@@ -29,13 +29,17 @@ public class Matrix {
         int columnsCount = getMaxRowLength(array);
 
         if (columnsCount == 0) {
-            throw new IllegalArgumentException("Количество столбцов = " + getColumnsCount() + ". Размеры матрицы должны быть > 0");
+            throw new IllegalArgumentException("Количество столбцов = " + columnsCount + ". Размеры матрицы должны быть > 0");
         }
 
         rows = new Vector[array.length];
 
         for (int i = 0; i < array.length; i++) {
-            rows[i] = new Vector(columnsCount, array[i]);
+            if (array[i] != null) {
+                rows[i] = new Vector(columnsCount, array[i]);
+            } else {
+                rows[i] = new Vector(columnsCount);
+            }
         }
     }
 
@@ -44,17 +48,27 @@ public class Matrix {
     }
 
     public Matrix(Vector[] vectors) {
+        if (vectors == null) {
+            throw new IllegalArgumentException("Массив векторов не должен быть null");
+        }
+
         if (vectors.length == 0) {
             throw new IllegalArgumentException("Количество строк = " + vectors.length + ". Размеры матрицы должны быть > 0");
         }
 
         int columnsCount = getMaxVectorSize(vectors);
 
+        if (columnsCount == 0) {
+            throw new IllegalArgumentException("Количество столбцов = " + columnsCount + ". Размеры матрицы должны быть > 0");
+        }
+
         rows = new Vector[vectors.length];
 
         for (int i = 0; i < rows.length; i++) {
             rows[i] = new Vector(columnsCount);
-            rows[i].add(vectors[i]);
+            if (vectors[i] != null) {
+                rows[i].add(vectors[i]);
+            }
         }
     }
 
@@ -176,7 +190,7 @@ public class Matrix {
             Vector vector = new Vector(matrix2.getColumnsCount());
 
             for (int j = 0; j < matrix2.getColumnsCount(); j++) {
-                int sum = 0;
+                double sum = 0;
 
                 for (int k = 0; k < matrix2.rows.length; k++) {
                     sum += matrix1.rows[i].getByIndex(k) * matrix2.rows[k].getByIndex(j);
@@ -261,11 +275,18 @@ public class Matrix {
 
     private static int getMaxRowLength(double[][] array) {
         int maxRowLength = 0;
+        boolean isAllRowsNull = true;
 
         for (double[] doubles : array) {
-            if (doubles.length > maxRowLength) {
+            if (doubles != null && doubles.length > maxRowLength) {
                 maxRowLength = doubles.length;
+                isAllRowsNull = false;
+
             }
+        }
+
+        if (isAllRowsNull) {
+            throw new IllegalArgumentException("Все строки null");
         }
 
         return maxRowLength;
@@ -273,11 +294,17 @@ public class Matrix {
 
     private static int getMaxVectorSize(Vector[] vectors) {
         int maxVectorSize = 0;
+        boolean isAllVectorsNull = true;
 
         for (Vector vector : vectors) {
-            if (vector.getSize() > maxVectorSize) {
+            if (vector != null && vector.getSize() > maxVectorSize) {
                 maxVectorSize = vector.getSize();
+                isAllVectorsNull = false;
             }
+        }
+
+        if (isAllVectorsNull) {
+            throw new IllegalArgumentException("Все строки null");
         }
 
         return maxVectorSize;
