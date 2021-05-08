@@ -281,7 +281,6 @@ public class Matrix {
             if (doubles != null && doubles.length > maxRowLength) {
                 maxRowLength = doubles.length;
                 isAllRowsNull = false;
-
             }
         }
 
