@@ -135,7 +135,7 @@ public class Tree<T> {
             return;
         }
 
-        throw new IllegalArgumentException("parent hasn't this node");
+        throw new IllegalArgumentException("У родителя нет этого узла");
     }
 
     public boolean remove(T data) {
