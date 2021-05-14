@@ -15,7 +15,7 @@ public class HashTable<T> implements Collection<T> {
 
     public HashTable(int arrayLength) {
         if (arrayLength <= 0) {
-            throw new IllegalArgumentException("Вместимость = " + arrayLength + ". Вместимость должна быть > 0");
+            throw new IllegalArgumentException("Длина массива = " + arrayLength + ". Длина массива должна быть > 0");
         }
 
         lists = new ArrayList[arrayLength];
@@ -50,7 +50,7 @@ public class HashTable<T> implements Collection<T> {
 
         public T next() {
             if (!hasNext()) {
-                throw new NoSuchElementException("Выход за пределы таблицы = " + generalIndex + ", размер = " + size + ")");
+                throw new NoSuchElementException("Нет следующего элемента. Индекс = " + generalIndex + ". Размер = " + size);
             }
 
             if (initialModCount != modCount) {
@@ -172,7 +172,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        if (collection.size() == 0) {
+        if (collection.isEmpty()) {
             return false;
         }
 
